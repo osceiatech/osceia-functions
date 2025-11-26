@@ -7,7 +7,7 @@ admin.initializeApp();
 const TWENTY_API_URL = 'https://crm.osceia.org.br/rest';
 // O token deve ser configurado como uma variável de ambiente secreta no Firebase Functions
 // Ex: firebase functions:config:set twenty.token="SEU_TOKEN_AQUI"
-const TWENTY_API_TOKEN = process.env.TWENTY_TOKEN;
+const TWENTY_API_TOKEN = functions.config().twenty?.token;
 
 if (!TWENTY_API_TOKEN) {
     functions.logger.error('TWENTY_API_TOKEN não está configurado. As funções de sincronização não funcionarão.');
@@ -28,7 +28,7 @@ async function findTwentyPersonIdByEmail(email: string): Promise<string | null> 
     // Baseado na estrutura de APIs REST modernas, vamos tentar um filtro simples.
     // Se o Twenty CRM usar um formato de filtro específico (ex: GraphQL-like),
     // o usuário precisará ajustar esta parte.
-    const filter = JSON.stringify({ email: { eq: email } });
+    const filter = JSON.stringify({email: {eq: email}});
     const url = `${TWENTY_API_URL}/people?filter=${encodeURIComponent(filter)}`;
 
     try {
@@ -88,7 +88,7 @@ async function syncUserAndSetClaims(user: admin.auth.UserRecord): Promise<void> 
 
         const customClaims = {
             hasProfile: hasProfile,
-            ...(twentyPersonId && { twentyPersonId: twentyPersonId }),
+            ...(twentyPersonId && {twentyPersonId: twentyPersonId}),
         };
 
         // Define os custom claims no usuário
