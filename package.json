@@ -4,7 +4,7 @@
   "description": "Cloud Functions para sincronização de usuários com Twenty CRM.",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint --ext .js,.ts src/",
+    "lint": "eslint --ext .js,.ts functions/src/",
     "build": "tsc",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
@@ -26,6 +26,10 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
+    "@typescript-eslint/eslint-plugin": "^8.48.0",
+    "@typescript-eslint/parser": "^8.48.0",
+    "eslint": "^9.39.1",
+    "eslint-plugin-import": "^2.32.0",
     "typescript": "^5.4.5"
   }
 }
